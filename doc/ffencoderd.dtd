@@ -1,0 +1,56 @@
+<!-- This is the schema for the 3 types of XML files that ffencoderd interacts with
+Video file : this will be mainly a file which ffencoderd uses as output to stat already done processes.
+Processes files : these are files which may be found in the process dir, define a process with at least profile and file tags.
+Profiles file : this schema defines structure of the profiles file, which is used to define which profiles (ffmpeg options) may be defined in processes.-->
+
+<!--Root element-->
+<!ELEMENT ffencoderd (video*|process*|profile*) >
+
+<!-- Schema for the output file -->
+<!--Video : This is the container for the codified videos-->
+<!ELEMENT video (description?,size?,format?,filename?) >
+<!-- Defines a unique identifier for this resource-->
+<!ATTLIST video source CDATA #REQUIRED>
+<!-- This is the identifier from a process(see Process schema) -->
+<!ATTLIST video id ID #REQUIRED>
+<!-- Containes a brief description for the resource-->
+<!ELEMENT description (#PCDATA) >
+<!-- Contains the format for the resource -->
+<!ELEMENT format (#PCDATA) >
+<!-- Contains the original name for the resource -->
+<!ELEMENT filename (#PCDATA) >
+
+<!-- Process schema -->
+<!--Process : element containing encoding process definition for a file -->
+<!ELEMENT process (file,parameter?)>
+<!-- Unique identifier used for external control, it's not really needed to be an ID-->
+<!ATTLIST process id ID #REQUIRED>
+<!-- Profile name to use for this process -->
+<!ATTLIST process profile CDATA #REQUIRED>
+<!-- filename to encode, found in the input dir -->
+<!ELEMENT file (#PCDATA)>
+<!-- Parameter data will only be used to define process parameter values at posting time -->
+<!ELEMENT parameter (#PCDATA) >
+
+<!-- Profile Schema -->
+<!-- Parameters will be parsed in order of appearence -->
+<!-- Profile : element containing encoding definition, think of them as templates-->
+<!ELEMENT profile (infile?,outfile?)>
+<!-- Profile's name -->
+<!ATTLIST profile name ID #REQUIRED>
+<!-- Profile's mount point, path where resources encoded with this profile will be accessible -->
+<!ATTLIST profile mount CDATA "">
+<!-- Media type, use mime valid media type -->
+<!ATTLIST profile type CDATA "">
+<!-- Extension, see it matches to the one that ffmpeg produces -->
+<!ATTLIST profile ext CDATA "">
+<!-- Parameters passed to input file -->
+<!ELEMENT infile (parameter*)>
+<!-- Parameters passed to output file -->
+<!ELEMENT outfile (parameter*)>
+<!-- Parameter name, this is used to reference it in the process definition from the input. If the parameter name is empty this will be passed to the run command directly with the default value -->
+<!ATTLIST parameter name CDATA #REQUIRED>
+<!-- Argument that will be passed to run the command with the value from the process definition -->
+<!ATTLIST parameter arg CDATA "">
+<!-- Default value for the defined parameter argument, if empty empty string will be used, if not defined the argument wont be setted if there's not a defined value in process definition -->
+<!ATTLIST parameter default CDATA "">

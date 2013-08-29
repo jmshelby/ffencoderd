@@ -1,0 +1,69 @@
+#!/bin/bash
+#
+# ffencoderd        Startup script for the FFencoder Daemon
+#
+# chkconfig: - 85 15
+# description: ffencoder daemon es un demonio que codifica videos utilizando ffmpeg
+# processname: ffencoderd
+# config: /etc/ffencoderd/ffencoderd.conf
+# pidfile: /var/run/ffencoderd.pid
+
+# Source function library.
+. /lib/lsb/init-functions
+
+if [ -f /etc/sysconfig/ffencoderd ]; then
+        . /etc/sysconfig/ffencoderd
+fi
+
+
+
+# Path to the script
+ffencoderd=${FFENCODERD-/usr/sbin/ffencoderd}
+prog=ffencoderd
+pidfile=${PIDFILE-/var/run/ffencoderd.pid}
+RETVAL=0
+
+# 
+start() {
+        echo -n $"Starting $prog: "
+        $ffencoderd $OPTIONS
+        RETVAL=$?
+        [ $RETVAL = 0 ]
+	echo "ffencoderd running"
+        return $RETVAL
+}
+
+# 
+stop() {
+	echo -n $"Stopping $prog: "
+	if [ -f ${pidfile} ]; then
+		killall ffencoderd.pl
+
+		RETVAL=$?
+		[ $RETVAL = 0 ] && rm -f ${pidfile}
+		echo "ffencoderd stopped"
+	else
+		echo "Problem stopping ffencoderd"
+		echo 
+	fi
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	stop
+	sleep 1
+	start
+	;;
+  *)
+	echo $"Usage: $prog {start|stop|restart}"
+	exit 1
+esac
+
+exit $RETVAL

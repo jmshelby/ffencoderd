@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE ffencoderd SYSTEM "ffencoderd.dtd">
+<ffencoderd>
+<!-- A profile definition needs the following attributes
+	name : is used as an identifier for internal use 
+	mount : mount point on the server, will be used to determine the path served through HTTP
+	type : is the content type used for files served from this mount point see http://www.iana.org/assignments/media-types/ (optional)
+	-->
+	<profile name="default" mount="video.flv" type="video/x-flv" ext="flv">
+	<!-- Outfile parameters, these are arguments used for the output file-->
+		<outfile>
+			<parameter arg="-f" name="format" default="flv"></parameter>
+			<!-- If a parameter has an empty name it will be allways defined with the value of the default attribute -->
+			<parameter arg="-y" name="overwrite"></parameter>
+			<parameter arg="-acodec" name="audiocodec"></parameter>
+			<parameter arg="-ar" name="audiorate" default="22050"></parameter>
+			<parameter arg="-s" name="size" default="320x240"></parameter>
+			<parameter arg="-aspect" name="aspect" default="4:3"></parameter>
+			<parameter arg="-ab" name="audiobitrate" default="56"></parameter>	
+			<parameter arg="-r" name="rate" default="15"></parameter>	
+			<parameter arg="-ac" name="audiochannel" default="1"></parameter>	
+			<!-- If a parameter hasn't a default attribute defined it won't be setted unless the process defintion defines a value -->
+			<parameter arg="-b" name="bitrate"></parameter>									
+		</outfile>
+	</profile>
+	<profile name="thumbnail" mount="thumbnail.jpg" type="image/jpeg" ext="jpg">
+		<outfile>
+			<parameter arg="-f" name="format" default="mjpeg"></parameter>
+			<!-- Overwrite output file -->
+			<parameter arg="-y" name="overwrite" default=""></parameter>
+			<parameter arg="-ss" name="time" default="0"></parameter>
+			<parameter arg="-s" name="size" default="220x120"></parameter>
+			<parameter arg="-vframes" name="" default="1"></parameter>
+			<parameter arg="-an" name="noaudio" default=""></parameter>							
+		</outfile>
+	</profile>
+	<profile name="h263" mount="h263.avi" type="video/x-h263" ext="avi">
+		<outfile>
+			<parameter arg="-f" name="format" default="h263"></parameter>
+			<parameter arg="-s" name="size" default="352x288"></parameter>						
+		</outfile>
+	</profile>
+</ffencoderd>

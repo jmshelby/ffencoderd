@@ -1,0 +1,14 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<div align="center">
+<div id="postform">
+<p>Remeber you don't need to use this form, is only an example, any file POST'd to the <b>/upload</b> path will be saved to the upload directory. The server is prepared to save large files so you only need to have a client that supports posting large files. If you don't know how you may give a try to <a href="http://swfupload.org/" target="_blank">SWFUpload</a>, this is a JS/Flash library to come up with large uploads, it's also possible to use CURL try <br/>
+<i>curl -F "filename=@filename" http://yourserver/upload</i><br/>
+You may also use other ways to upload files, such as FTP.<br/>Remember to use <b>multipart/form-data</b> when POSTing to the /upload path.</p>
+<TMPL_VAR NAME="POST_MSG">
+<form method="POST" action="<TMPL_VAR NAME="POST_URL">" enctype="multipart/form-data">
+Video file to upload: <input type="file" name="videofile"><br/>
+<input type="submit" value="Ok">
+</form>
+</div>
+</div>
+<TMPL_INCLUDE NAME="footer.tmpl"> 
