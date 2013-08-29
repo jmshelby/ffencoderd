@@ -5,7 +5,7 @@ Created by Iago Tomas, and managed as an open source project on github by @jmshe
 
 --
 
-DESCRIPTION
+###DESCRIPTION
     ffencoderd is a daemon that wraps the usage of ffmpeg providing a simple
     SOAP API to control video encoding jobs. ffencoderd is focused on any
     video conversion to flash video format although any format accepted by
@@ -14,7 +14,7 @@ DESCRIPTION
     api. And a second part the encoder daemon which converts the video. Each
     part is runned in background as a daemon process.
 
-INSTALL
+###INSTALL
     Install should be quite straight forward, just by unpackaging and
     executing the main program file ffencoderd should run. Just be sure to
     meet all "REQUIREMENTS" found below. There are some scripts in the doc
@@ -85,7 +85,7 @@ INSTALL
     directory. ffencoderd SOAP service gots methods to create this files
     programatically through SOAP, refer to "SOAP" section.
 
-  Environment variables
+#####Environment variables
     Thesea are the environment variables used by the init script provided in
     the ./doc folder.
 
@@ -101,13 +101,13 @@ INSTALL
     the start program at init. See "Command Line Arguments" section for more
     detail.
 
-  Supported OS
+#####Supported OS
     Currently only *UNIX like systems are supported. ffencoderd was
     developed using an Fedora Core 6 kernel 2.6.18-1.2798.fc6 and perl,
     v5.8.8 built for i386-linux-thread-multi. Please report on succesful
     builds on other systems.
 
-REQUIREMENTS
+###REQUIREMENTS
     ffmpeg
         Tested with FFmpeg version SVN-r8876, Copyright (c) 2000-2007
         Fabrice Bellard, et al.
@@ -115,7 +115,7 @@ REQUIREMENTS
     perl
         Tested with perl, v5.8.8 built for i386-linux-thread-multi.
 
-  Perl DEPENDENCIES
+#####Perl DEPENDENCIES
     ffencoderd depends on a few cpan perl libraries and ffmpeg. Please refer
     to ffmpeg official site for howto install ffmpeg in your system.
 
@@ -138,7 +138,7 @@ REQUIREMENTS
     at cpan site to install them locally without need to have
     superprivileges.
 
-Configuration File
+###Configuration File
     The default configuration filename is ffencoderd.conf which should be
     located at the same folder of the main program file. This is just a
     plain text field with some key value pairs to define config values. Any
@@ -227,7 +227,7 @@ Configuration File
     Some more explanations may be found in the example config file found in
     the doc folder.
 
-Profiles file
+###Profiles file
     The profiles are the way to set up how the ffmpeg command will be made
     up, these are defined in a file found in the data directory named
     profiles.xml. A profile definition has the following elements
@@ -268,7 +268,7 @@ Profiles file
 
     To see some examples, see the profiles file in the data directory.
 
-Command Line Arguments
+###Command Line Arguments
     There are several arguments that may be defined when calling ffencoderd.
     These are
 
@@ -301,7 +301,7 @@ Command Line Arguments
         Sets the path to the file where to write ffmpeg encoding output,
         mainly for debugging purposes. Example /path/to/file.log
 
-HTTP Server
+###HTTP Server
     The HTTP Server of ffencoderd has some paths that may be accesed to
     interact with ffencoderd, next are the explanations for all of them.
 
@@ -349,7 +349,7 @@ HTTP Server
         This is the same file that output.file from config, this access is
         for easiness and for monitoring purposes.
 
-SOAP
+###SOAP
     The soap proxy may be accessed through the /soap as specified before,
     even though it can be really accessed via any path that is not
     resolvable to any of listed above.
@@ -367,7 +367,7 @@ SOAP
     See the API documentation for more information about accesible methods
     on the server.
 
-  API
+#####API
     Constants that are returned by the SOAP API
 
     FFENCODERD_FAIL
@@ -449,7 +449,7 @@ SOAP
      Return
        string : A string with the API's version
 
-  Examples
+#####Examples
     Next is an example of using SOAP-Lite as client to request version
     number to ffencoderd running in localhost.
 
@@ -468,11 +468,11 @@ SOAP
                     echo "ffencoderd v".$client->version()."";
             ?>
 
-See Also
+###See Also
     You may also find the developers documentation at ffencoderd's website.
     <http://ffencoderd.sourceforge.net>
 
-COPYRIGHT
+###COPYRIGHT
             Copyright 2008, Iago Tomas
         
     This program is free software: you can redistribute it and/or modify it
@@ -488,7 +488,7 @@ COPYRIGHT
     You should have received a copy of the GNU General Public License along
     with this program. If not, see <http://www.gnu.org/licenses/>.
 
-AVAILABILITY
+###AVAILABILITY
     The latest version of this program should be accessible through the main
     ffencoderd site
 
