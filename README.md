@@ -6,106 +6,63 @@ Created by Iago Tomas, and managed as an open source project on github by @jmshe
 --
 
 ###DESCRIPTION
-    ffencoderd is a daemon that wraps the usage of ffmpeg providing a simple
-    SOAP API to control video encoding jobs. ffencoderd is focused on any
-    video conversion to flash video format although any format accepted by
-    ffmpeg can be used. ffencoderd is divided into two main parts an http
-    server which provides methods to add/retrieve files and request the SOAP
-    api. And a second part the encoder daemon which converts the video. Each
-    part is runned in background as a daemon process.
+ffencoderd is a daemon that wraps the usage of ffmpeg providing a simple SOAP API to control video encoding jobs. ffencoderd is focused on any video conversion to flash video format although any format accepted by ffmpeg can be used. ffencoderd is divided into two main parts an http server which provides methods to add/retrieve files and request the SOAP api. And a second part the encoder daemon which converts the video. Each part is runned in background as a daemon process.
 
 ###INSTALL
-    Install should be quite straight forward, just by unpackaging and
-    executing the main program file ffencoderd should run. Just be sure to
-    meet all "REQUIREMENTS" found below. There are some scripts in the doc
-    folder of the package which should help in the deployment.
+Install should be quite straight forward, just by unpackaging and executing the main program file ffencoderd should run. Just be sure to meet all "REQUIREMENTS" found below. There are some scripts in the doc folder of the package which should help in the deployment.
 
-    Download latest version,
+Download latest version,
 
     "mv ffencoderd-varsion.tar.gz /path/to/install/;cd /path/to/install/"
 
     "tar -xzvf ffencoderd-version.tar.gz" or "unzip ffencoderd-version.zip"
 
-    Edit ffencoderd.conf to meet your system or alternatively create a new
-    config file with needed parameters and pass it with '-c' argument to
-    ffencoderd
+Edit ffencoderd.conf to meet your system or alternatively create a new config file with needed parameters and pass it with '-c' argument to ffencoderd
 
-    Set permissions to defined paths/files in the config file
-    (output.file,video.input.dir,process.dir,video.output.dir,thumbnail.outp
-    ut.dir, log.dir, pid.dir) set to any you want as long as the user
-    executing ffencoderd has read/write privileges.
+Set permissions to defined paths/files in the config file (output.file,video.input.dir,process.dir,video.output.dir,thumbnail.outp ut.dir, log.dir, pid.dir) set to any you want as long as the user executing ffencoderd has read/write privileges.
 
     "chmod 644 /path/to/output/dir /video/input/dir /process/dir
     /video/output/dir /thumbnail/output/dir /log/dir /pid/dir"
 
-    ffencoderd runs under the same user and group that executed it. So
-    beware to not run it with root.
+ffencoderd runs under the same user and group that executed it. So beware to not run it with root.
 
     "/path/to/install/ffencoderd.pl -c /path/to/config/file.conf"
 
-    Or run the main program file ffencoderd.pl, it will look for a config
-    file name ffencoderd.conf in the same folder.
+Or run the main program file ffencoderd.pl, it will look for a config file name ffencoderd.conf in the same folder.
 
     "/path/to/install/ffencoderd.pl"
 
-    Just type '-h' to get possible arguments that can be setted. Optionally
-    you can use the init script provided in the doc folder, before you'll
-    need to setup the *FFENCODERD* and *PIDFILE* environment variables or
-    put ffencoderd in the default paths that the scripts looks for. Be
-    carfeul *PIDFILE* must point to the location of the pidfile which is
-    setted in the conf file.
+Just type '-h' to get possible arguments that can be setted. Optionally you can use the init script provided in the doc folder, before you'll need to setup the *FFENCODERD* and *PIDFILE* environment variables or put ffencoderd in the default paths that the scripts looks for. Be carfeul *PIDFILE* must point to the location of the pidfile which is setted in the conf file.
 
-    For more information about the configuraion file see the "Configuration
-    File" section.
+For more information about the configuraion file see the "Configuration File" section.
 
-    Once installed and running ( if http config parameter is set to true )
-    should be possible to access a main page at the address and port defined
-    in the config file, with your web browser. Example
-    http://localhost:8080/ This will show the main page letting you know
-    ffencoderd is succesfully running and gives you some information about
-    it. See the "HTTP Server" section.
+Once installed and running ( if http config parameter is set to true ) should be possible to access a main page at the address and port defined in the config file, with your web browser. Example http://localhost:8080/ This will show the main page letting you know ffencoderd is succesfully running and gives you some information about it. See the "HTTP Server" section.
 
-    Otherwise if you don't want to run ffencoderd HTTP server just set the
-    http config parameter to false, then you may just save your processes in
-    XML in the process.dir directory defined through the config file. This
-    XML processes definition must validate against the DTD definition of
-    ffencoderd. The DTD schema may be found in the ./doc directory or in the
-    main site.
+Otherwise if you don't want to run ffencoderd HTTP server just set the http config parameter to false, then you may just save your processes in XML in the process.dir directory defined through the config file. This XML processes definition must validate against the DTD definition of ffencoderd. The DTD schema may be found in the ./doc directory or in the main site.
 
-    A typical XML process will look like
+A typical XML process will look like
 
     <ffencoderd> <process id="0"> <file>filename</file>
     <profile>SomeExistentProfile</profile> <parameter
     name="someName">someValue</parameter> <parameter
     name="someName2">someValue2</parameter> </process> </ffencoderd>
 
-    Just create a file and save it in the process.dir, call it somthing.xml.
-    ffencoderd will parse the file and convert *filename* with default
-    ffmpeg parameters saving the converted file in the video.output.dir
-    directory. ffencoderd SOAP service gots methods to create this files
-    programatically through SOAP, refer to "SOAP" section.
+Just create a file and save it in the process.dir, call it somthing.xml.  ffencoderd will parse the file and convert *filename* with default ffmpeg parameters saving the converted file in the video.output.dir directory. ffencoderd SOAP service gots methods to create this files programatically through SOAP, refer to "SOAP" section.
 
 #####Environment variables
-    Thesea are the environment variables used by the init script provided in
-    the ./doc folder.
+These are the environment variables used by the init script provided in the ./doc folder.
 
-   FFENCODERD
-    The location of the main file program
+######FFENCODERD
+The location of the main file program
 
-   PIDFILE
-    The location of the pidfile created by the ffencoderd daemon, this must
-    be the same as defined in the config file.
+######PIDFILE
+The location of the pidfile created by the ffencoderd daemon, this must be the same as defined in the config file.
 
-   OPTIONS
-    This variable is optional, you may set any arguments you wish to pass to
-    the start program at init. See "Command Line Arguments" section for more
-    detail.
+######OPTIONS
+This variable is optional, you may set any arguments you wish to pass to the start program at init. See "Command Line Arguments" section for more detail.
 
 #####Supported OS
-    Currently only *UNIX like systems are supported. ffencoderd was
-    developed using an Fedora Core 6 kernel 2.6.18-1.2798.fc6 and perl,
-    v5.8.8 built for i386-linux-thread-multi. Please report on succesful
-    builds on other systems.
+Currently only *UNIX like systems are supported. ffencoderd was developed using an Fedora Core 6 kernel 2.6.18-1.2798.fc6 and perl, v5.8.8 built for i386-linux-thread-multi. Please report on succesful builds on other systems.
 
 ###REQUIREMENTS
     ffmpeg
