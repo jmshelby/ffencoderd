@@ -42,24 +42,31 @@ Otherwise if you don't want to run ffencoderd HTTP server just set the http conf
 
 A typical XML process will look like
 
-    <ffencoderd> <process id="0"> <file>filename</file>
-    <profile>SomeExistentProfile</profile> <parameter
-    name="someName">someValue</parameter> <parameter
-    name="someName2">someValue2</parameter> </process> </ffencoderd>
+```xml
+<?xml version="1.0"?>
+<ffencoderd>
+  <process id="0">
+    <file>filename</file>
+    <profile>SomeExistentProfile</profile>
+    <parameter name="someName">someValue</parameter>
+    <parameter name="someName2">someValue2</parameter>
+  </process>
+</ffencoderd>
+```
 
 Just create a file and save it in the process.dir, call it somthing.xml.  ffencoderd will parse the file and convert *filename* with default ffmpeg parameters saving the converted file in the video.output.dir directory. ffencoderd SOAP service gots methods to create this files programatically through SOAP, refer to "SOAP" section.
 
 #####Environment variables
 These are the environment variables used by the init script provided in the ./doc folder.
 
-######FFENCODERD
-The location of the main file program
+ - FFENCODERD
+  - The location of the main file program
 
-######PIDFILE
-The location of the pidfile created by the ffencoderd daemon, this must be the same as defined in the config file.
+ - PIDFILE
+  - The location of the pidfile created by the ffencoderd daemon, this must be the same as defined in the config file.
 
-######OPTIONS
-This variable is optional, you may set any arguments you wish to pass to the start program at init. See "Command Line Arguments" section for more detail.
+ - OPTIONS
+  - This variable is optional, you may set any arguments you wish to pass to the start program at init. See "Command Line Arguments" section for more detail.
 
 #####Supported OS
 Currently only *UNIX like systems are supported. ffencoderd was developed using an Fedora Core 6 kernel 2.6.18-1.2798.fc6 and perl, v5.8.8 built for i386-linux-thread-multi. Please report on succesful builds on other systems.
