@@ -13,24 +13,29 @@ Install should be quite straight forward, just by unpackaging and executing the 
 
 Download latest version,
 
-    "mv ffencoderd-varsion.tar.gz /path/to/install/;cd /path/to/install/"
+    mv ffencoderd-varsion.tar.gz /path/to/install/;cd /path/to/install/
 
-    "tar -xzvf ffencoderd-version.tar.gz" or "unzip ffencoderd-version.zip"
+    tar -xzvf ffencoderd-version.tar.gz" or "unzip ffencoderd-version.zip
 
 Edit ffencoderd.conf to meet your system or alternatively create a new config file with needed parameters and pass it with '-c' argument to ffencoderd
 
 Set permissions to defined paths/files in the config file (output.file,video.input.dir,process.dir,video.output.dir,thumbnail.outp ut.dir, log.dir, pid.dir) set to any you want as long as the user executing ffencoderd has read/write privileges.
 
-    "chmod 644 /path/to/output/dir /video/input/dir /process/dir
-    /video/output/dir /thumbnail/output/dir /log/dir /pid/dir"
+    chmod 644 /path/to/output/dir
+    chmod 664 /video/input/dir
+    chmod 664 /process/dir
+    chmod 664 /video/output/dir
+    chmod 664 /thumbnail/output/dir
+    chmod 664 /log/dir
+    chmod 664 /pid/dir
 
 ffencoderd runs under the same user and group that executed it. So beware to not run it with root.
 
-    "/path/to/install/ffencoderd.pl -c /path/to/config/file.conf"
+    /path/to/install/ffencoderd.pl -c /path/to/config/file.conf
 
 Or run the main program file ffencoderd.pl, it will look for a config file name ffencoderd.conf in the same folder.
 
-    "/path/to/install/ffencoderd.pl"
+    /path/to/install/ffencoderd.pl
 
 Just type '-h' to get possible arguments that can be setted. Optionally you can use the init script provided in the doc folder, before you'll need to setup the *FFENCODERD* and *PIDFILE* environment variables or put ffencoderd in the default paths that the scripts looks for. Be carfeul *PIDFILE* must point to the location of the pidfile which is setted in the conf file.
 
@@ -72,16 +77,14 @@ These are the environment variables used by the init script provided in the ./do
 Currently only *UNIX like systems are supported. ffencoderd was developed using an Fedora Core 6 kernel 2.6.18-1.2798.fc6 and perl, v5.8.8 built for i386-linux-thread-multi. Please report on succesful builds on other systems.
 
 ###REQUIREMENTS
-    ffmpeg
-        Tested with FFmpeg version SVN-r8876, Copyright (c) 2000-2007
-        Fabrice Bellard, et al.
+ - ffmpeg
+  - Tested with FFmpeg version SVN-r8876, Copyright (c) 2000-2007 Fabrice Bellard, et al.
 
-    perl
-        Tested with perl, v5.8.8 built for i386-linux-thread-multi.
+ - perl
+  - Tested with perl, v5.8.8 built for i386-linux-thread-multi.
 
 #####Perl DEPENDENCIES
-    ffencoderd depends on a few cpan perl libraries and ffmpeg. Please refer
-    to ffmpeg official site for howto install ffmpeg in your system.
+ffencoderd depends on a few cpan perl libraries and ffmpeg. Please refer to ffmpeg official site for howto install ffmpeg in your system.
 
     IPC::ShareLite
     Config::General
@@ -92,178 +95,131 @@ Currently only *UNIX like systems are supported. ffencoderd was developed using 
     Pod::Xhtml
     HTML::Template
 
-    These are libraries that can all be found at CPAN, so just install them
-    the way you want. Here is an example of how to install them
+These are libraries that can all be found at CPAN, so just install them the way you want. Here is an example of how to install them:
 
-    "cpan IPC::ShareLite Config::General SOAP::Lite XML::DOM XML::Simple
-    Pod::WSDL Pod::Xhtml HTML::Template"
+    cpan IPC::ShareLite Config::General SOAP::Lite XML::DOM XML::Simple Pod::WSDL Pod::Xhtml HTML::Template
 
-    Beware that you may need root privileges to install them this way. Look
-    at cpan site to install them locally without need to have
-    superprivileges.
+Beware that you may need root privileges to install them this way. Look at cpan site to install them locally without need to have superprivileges.
 
 ###Configuration File
-    The default configuration filename is ffencoderd.conf which should be
-    located at the same folder of the main program file. This is just a
-    plain text field with some key value pairs to define config values. Any
-    changes in the file will need ffencoderd restart. Next is some
-    explanation about.
+The default configuration filename is ffencoderd.conf which should be located at the same folder of the main program file. This is just a plain text field with some key value pairs to define config values. Any changes in the file will need ffencoderd restart. Next is some explanation about.
 
-    http
-        Start an http server with different services, otherwise only
-        encoding daemon will be started. Possible values are true or false
+ - http
+  - Start an http server with different services, otherwise only encoding daemon will be started. Possible values are true or false
 
-    host
-        The host address for the http server, this is an IP or hostname that
-        should resolve to the machine in which ffencoderd is running.
+ - host
+  - The host address for the http server, this is an IP or hostname that should resolve to the machine in which ffencoderd is running.
 
-    http.port
-        The port which the http should listen to for incoming connections.
-        This is any port you like, even though normally we will use an http
-        standard port such as 80 if no other web server are running on the
-        same machine. If not take any port you like.
+ - http.port
+  - The port which the http should listen to for incoming connections.  This is any port you like, even though normally we will use an http standard port such as 80 if no other web server are running on the same machine. If not take any port you like.
 
-    http.spawn.children
-        The number of children the http server should create at start to
-        listen for incoming connections, this number should depend on your
-        system. Don't put a too high number here as it could collapse your
-        system. Example : 10
+ - http.spawn.children
+  - The number of children the http server should create at start to listen for incoming connections, this number should depend on your system. Don't put a too high number here as it could collapse your system. Example : 10
 
-    http.childeren.lifetime
-        This is the number of requests each child will attend before dying
-        and respawning. Leave it in a high number as 100 or modify if you
-        know what you are doing.
+ - http.childeren.lifetime
+  - This is the number of requests each child will attend before dying and respawning. Leave it in a high number as 100 or modify if you know what you are doing.
 
-    ffmpeg
-        The location of ffmpeg in your filesystem. Example : /usr/bin/ffmpeg
+ - ffmpeg
+  - The location of ffmpeg in your filesystem. Example : /usr/bin/ffmpeg
 
-    output.file
-        This is the file where ffencoderd puts the information about the
-        encoded files, in xml format. It must be a full path with filename,
-        you may put it wherever you want as long as the the ffencoderd has
-        write/read access.
+ - output.file
+  - This is the file where ffencoderd puts the information about the encoded files, in xml format. It must be a full path with filename, you may put it wherever you want as long as the the ffencoderd has write/read access.
 
-    process.dir
-        This is the path to the folder where ffencoderd looks for new file
-        processes, is just a writable folder where ffencoderd will look
-        and/or put some xml files to configure video conversion processes.
-        ffencoderd will scan this directory every delay seconds for *.xml
-        process definitions, these are XML files that validate the DTD
-        schema given with ffencoderd and that you may found at ffencoderd
-        main's site. If the http server is not activated or if you prefer to
-        interact directly with the daemon you may save any xml file with
-        process definitions in this directory. The daemon will parse and
-        delete them after finishing defined processes.
+ - process.dir
+  - This is the path to the folder where ffencoderd looks for new file processes, is just a writable folder where ffencoderd will look and/or put some xml files to configure video conversion processes.  ffencoderd will scan this directory every delay seconds for *.xml process definitions, these are XML files that validate the DTD schema given with ffencoderd and that you may found at ffencoderd main's site. If the http server is not activated or if you prefer to interact directly with the daemon you may save any xml file with process definitions in this directory. The daemon will parse and delete them after finishing defined processes.
 
-    video.output.dir
-        This is the path to a writeable folder where ffencoderd will output
-        converted videos.
+ - video.output.dir
+  - This is the path to a writeable folder where ffencoderd will output converted videos.
 
-    video.input.dir
-        This is the path to a writeable folder where ffencoderd will look
-        for videos to encode.
+ - video.input.dir
+  - This is the path to a writeable folder where ffencoderd will look for videos to encode.
 
-    show.news
-        Set this option to show recent news from the project in the main
-        page of the server, possible values are true or false. The news are
-        fetched from
-        http://sourceforge.net/export/rss2_projnews.php?group_id=218142 .
+ - show.news
+  - Set this option to show recent news from the project in the main page of the server, possible values are true or false. The news are fetched from http://sourceforge.net/export/rss2_projnews.php?group_id=218142 .
 
-    log This parameter defines if internal log messages should be logged,
-        possible values are true or false.
+ - log This parameter defines if internal log messages should be logged,
+  - possible values are true or false.
 
-    log.file
-        This is the filename for the log file. Example ffencoderd.log
+ - log.file
+  - This is the filename for the log file. Example ffencoderd.log
 
-    log.dir
-        This is the path to a writeable folder where the logs will be putted
-        in. Example /path/to/install/logs
+ - log.dir
+  - This is the path to a writeable folder where the logs will be putted in. Example /path/to/install/logs
 
-    pid.dir
-        This is the path to a writeable folder where the pidfile will be
-        saved to. Example /var/run/ Remark that last slash is needed.
+ - pid.dir
+  - This is the path to a writeable folder where the pidfile will be saved to. Example /var/run/ Remark that last slash is needed.
 
-    dtd This is the url of the DTD file that will be added to all
-        output.file control files created by ffencoderd. Normally this
-        shouldn't be needed to be modified. There's always an updated DTD
-        version at ffencoderd site
+ - dtd This is the url of the DTD file that will be added to all
+  - output.file control files created by ffencoderd. Normally this shouldn't be needed to be modified. There's always an updated DTD version at ffencoderd site
 
-    Some more explanations may be found in the example config file found in
-    the doc folder.
+Some more explanations may be found in the example config file found in the doc folder.
 
 ###Profiles file
-    The profiles are the way to set up how the ffmpeg command will be made
-    up, these are defined in a file found in the data directory named
-    profiles.xml. A profile definition has the following elements
+The profiles are the way to set up how the ffmpeg command will be made up, these are defined in a file found in the data directory named profiles.xml. A profile definition has the following elements.
 
-    name
-        The profile's name, used to reference it.
+ - name
+  - The profile's name, used to reference it.
 
-    ext The extension used by this profile as is produced by the conersion
-        command.
+ - ext
+  - The extension used by this profile as is produced by the conversion command.
 
-    mount
-        The mount point where the resources converted with this profile will
-        be accessible.
+ - mount
+  - The mount point where the resources converted with this profile will be accessible.
 
-    type
-        Media type to be used in this mount point.
+ - type
+  - Media type to be used in this mount point.
 
-    There are also some elements that define the parameters that can be
-    defined through the SOAP API, these parameters are divided into two
-    types, the parameters that define the resource to be converted and the
-    parameters that define the converted resource, infile and outfile
-    parameters. Each can have multiple parameter definition and both types
-    are optional, although only infile can really be optional as if there
-    aren't any outfile parameters defined the conversion command won't do
-    anything at all. The parameters are defined with next elements :
+There are also some elements that define the parameters that can be defined through the SOAP API, these parameters are divided into two types, the parameters that define the resource to be converted and the parameters that define the converted resource, infile and outfile parameters. Each can have multiple parameter definition and both types are optional, although only infile can really be optional as if there aren't any outfile parameters defined the conversion command won't do anything at all. The parameters are defined with next elements :
 
-    arg The argument used for the ffmpeg command, ex: -f
+ - arg
+  - The argument used for the ffmpeg command, ex: -f
 
-    name
-        The name for this parameter, this will be the name to use to define
-        it through the SOAP api, this name has to be unique over infile and
-        outfile parameters.
+ - name
+  - The name for this parameter, this will be the name to use to define it through the SOAP api, this name has to be unique over infile and outfile parameters.
 
-    default
-        The default value for this parameter, this element is optional, if
-        it isn't defined the parameter will only be defined if the user
-        defines it through the SOAP API.
+ - default
+  - The default value for this parameter, this element is optional, if it isn't defined the parameter will only be defined if the user defines it through the SOAP API.
 
-    To see some examples, see the profiles file in the data directory.
+To see some examples, see the profiles file in the data directory.
 
 ###Command Line Arguments
-    There are several arguments that may be defined when calling ffencoderd.
-    These are
+There are several arguments that may be defined when calling ffencoderd. These are
 
-    -h|help|usage
-        Shows a help message with all the possible arguments.
+ - -h|help|usage
+  - Shows a help message with all the possible arguments.
 
-    -v|V|version
-        Shows version number and copyright information.
+ - -v|V|version
+  - Shows version number and copyright information.
 
-    -c <configfile>
-        Sets the config file to be used. Use an absolute path to config
-        file. Example /path/to/config/file.conf
+ - -c <configfile>
+  - Sets the config file to be used. Use an absolute path to config file. Example
+```
+/path/to/config/file.conf
+```
 
-    -d <delay>
-        Sets the delay in seconds to scan for processes. Example 40
+ - -d <delay>
+  - Sets the delay in seconds to scan for processes. Example 40
 
-    -m <xmlfile>
-        Sets the path where the output file will be putted in. Example
-        /path/to/output/file.xml
+ - -m <xmlfile>
+  - Sets the path where the output file will be putted in. Example
+```
+/path/to/output/file.xml
+```
 
-    -p <dirname>
-        Sets the path where to look for processes definitions. Example
-        /path/to/processes/dir
+ - -p <dirname>
+  - Sets the path where to look for processes definitions. Example
+```
+/path/to/processes/dir
+```
 
-    -l <logfile>
-        Sets the path to the file where to write log messages. Example
+ - -l <logfile>
+  - Sets the path to the file where to write log messages. Example
+```
         /path/to/log/file.log
+```
 
-    --ffmpeg-output|-fo <ffmpegoutputfile>
-        Sets the path to the file where to write ffmpeg encoding output,
-        mainly for debugging purposes. Example /path/to/file.log
+ - --ffmpeg-output|-fo <ffmpegoutputfile>
+  - Sets the path to the file where to write ffmpeg encoding output, mainly for debugging purposes. Example /path/to/file.log
 
 ###HTTP Server
     The HTTP Server of ffencoderd has some paths that may be accesed to
