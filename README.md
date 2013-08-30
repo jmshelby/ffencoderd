@@ -249,17 +249,17 @@ This file is the news file used to show news on the main page, if you don't want
 This is the same file that output.file from config, this access is for easiness and for monitoring purposes.
 
 ###SOAP
-    The soap proxy may be accessed through the /soap as specified before, even though it can be really accessed via any path that is not resolvable to any of listed above.
+The soap proxy may be accessed through the /soap as specified before, even though it can be really accessed via any path that is not resolvable to any of listed above.
 
-    An WSDL file definition is accesible through any uri at the server just appending ?wsdl, so /soap?wsdl will return the spec file.
+An WSDL file definition is accesible through any uri at the server just appending ?wsdl, so /soap?wsdl will return the spec file.
 
-    ffencoderd SOAP functionality is based on SOAP-Lite so please refer to the module documentation for further information on how the SOAP part works.
+ffencoderd SOAP functionality is based on SOAP-Lite so please refer to the module documentation for further information on how the SOAP part works.
 
-    You may post any request to the SOAP server conforming the SOAP 1.1 specification.
+You may post any request to the SOAP server conforming the SOAP 1.1 specification.
 
-    See the API documentation for more information about accesible methods on the server.
+See the API documentation for more information about accesible methods on the server.
 
-#####API
+###API
 Constants that are returned by the SOAP API
 
 - FFENCODERD_FAIL
@@ -327,48 +327,48 @@ __version__ - Returns the API version.
 ######Return
  * string : A string with the API's version
 
-#####Examples
-    Next is an example of using SOAP-Lite as client to request version
-    number to ffencoderd running in localhost.
+####Examples
+Next is an example of using SOAP-Lite as client to request version number to ffencoderd running in localhost.
 
-            use SOAP::Lite;
-            my $soap = SOAP::Lite
-           ->proxy('http://localhost:8080/soap')
-           ->uri('Service');
-            my $invoca = $soap->version();
-            my $version = $invoca->result();
-            print "ffencoderd v$version";
+```pearl
+use SOAP::Lite;
+my $soap = SOAP::Lite
+->proxy('http://localhost:8080/soap')
+->uri('Service');
+my $invoca = $soap->version();
+my $version = $invoca->result();
+print "ffencoderd v$version";
+```
         
-    Or the same in PHP would be something like this.
+Or the same in PHP would be something like this.
 
-            <?php
-                    $client = new SoapClient("http://localhost:8080/soap?wsdl",array('uri'=>'Service'));
-                    echo "ffencoderd v".$client->version()."";
-            ?>
+```php
+$client = new SoapClient("http://localhost:8080/soap?wsdl",array('uri'=>'Service'));
+echo "ffencoderd v".$client->version()."";
+```
 
 ###See Also
-    You may also find the developers documentation at ffencoderd's website.
-    <http://ffencoderd.sourceforge.net>
+You may also find the developers documentation at ffencoderd's website.  http://ffencoderd.sourceforge.net
 
 ###COPYRIGHT
-            Copyright 2008, Iago Tomas
-        
-    This program is free software: you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation, either version 3 of the License, or (at your
-    option) any later version.
+```
+                       Copyright 2008, Iago Tomas
 
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
 
-    You should have received a copy of the GNU General Public License along
-    with this program. If not, see <http://www.gnu.org/licenses/>.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program. If not, see <http://www.gnu.org/licenses/>.
+```
 
 ###AVAILABILITY
-    The latest version of this program should be accessible through the main
-    ffencoderd site
-
-    http://ffencoderd.sourceforge.net
+The latest stable version of this program should be accessible through the main ffencoderd site:
+http://ffencoderd.sourceforge.net
 
