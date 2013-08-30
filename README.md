@@ -222,70 +222,42 @@ There are several arguments that may be defined when calling ffencoderd. These a
   - Sets the path to the file where to write ffmpeg encoding output, mainly for debugging purposes. Example /path/to/file.log
 
 ###HTTP Server
-    The HTTP Server of ffencoderd has some paths that may be accesed to
-    interact with ffencoderd, next are the explanations for all of them.
+The HTTP Server of ffencoderd has some paths that may be accesed to interact with ffencoderd, next are the explanations for all of them.
 
-    Root path /
-        This path will serve the main information screen of ffencoderd with
-        some information about the program. You got this documentation, a
-        SOAP API reference and a monitor to surveil the ffencoderd server.
+#####Root path /
+This path will serve the main information screen of ffencoderd with some information about the program. You got this documentation, a SOAP API reference and a monitor to surveil the ffencoderd server.
 
-    Soap proxy /soap
-        This path is the SOAP proxy access. Is where clients should point to
-        if not using the WSDL functionality.
+#####Soap proxy /soap
+This path is the SOAP proxy access. Is where clients should point to if not using the WSDL functionality.
 
-    Static path /static/
-        This is the path where static files are served from, it won't output
-        a file index it will only serve existing files from within the
-        ./data/www folder inside the installed path.
+#####Static path /static/
+This is the path where static files are served from, it won't output a file index it will only serve existing files from within the ./data/www folder inside the installed path.
 
-    Files path /<source>/*
-        Any encoded resource is referenced through the source parameter
-        returned by the getProcess method from the SOAP API . To see
-        accessible paths see the profiles section and the profiles files to
-        see which mount points are setted in your server.
+#####Files path /<source>/*
+Any encoded resource is referenced through the source parameter returned by the getProcess method from the SOAP API . To see accessible paths see the profiles section and the profiles files to see which mount points are setted in your server.
 
-    Upload path /upload
-        This path has a double function, it will output an html form example
-        if accessed via GET method and will save to the video.input.dir
-        parameter folder any multipart file posted to this path via POST
-        method. After posting a file the server will output an xml with the
-        filename used to save the file, be careful it's not always the same
-        filename with which you posted yours a random one may be generated
-        if there's already a file with the same name, the extension will be
-        always preserved. And the size of the saved file in bytes.
+#####Upload path /upload
+This path has a double function, it will output an html form example if accessed via GET method and will save to the video.input.dir parameter folder any multipart file posted to this path via POST method. After posting a file the server will output an xml with the filename used to save the file, be careful it's not always the same filename with which you posted yours a random one may be generated if there's already a file with the same name, the extension will be always preserved. And the size of the saved file in bytes.
 
-    Stats xml file /stats.xml
-        This file is generated each time this is called it outputs an xml
-        file with some statistics of the server. It's mainly used for the
-        monitor in the main information screen found at /.
+#####Stats xml file /stats.xml
+This file is generated each time this is called it outputs an xml file with some statistics of the server. It's mainly used for the monitor in the main information screen found at /.
 
-    News xml file /news.xml
-        This file is the news file used to show news on the main page, if
-        you don't want to show news on the main page just use the show.news
-        parameter on the config file.
+#####News xml file /news.xml
+This file is the news file used to show news on the main page, if you don't want to show news on the main page just use the show.news parameter on the config file.
 
-    Processes xml file /processes.xml
-        This is the same file that output.file from config, this access is
-        for easiness and for monitoring purposes.
+#####Processes xml file /processes.xml
+This is the same file that output.file from config, this access is for easiness and for monitoring purposes.
 
 ###SOAP
-    The soap proxy may be accessed through the /soap as specified before,
-    even though it can be really accessed via any path that is not
-    resolvable to any of listed above.
+    The soap proxy may be accessed through the /soap as specified before, even though it can be really accessed via any path that is not resolvable to any of listed above.
 
-    An WSDL file definition is accesible through any uri at the server just
-    appending ?wsdl, so /soap?wsdl will return the spec file.
+    An WSDL file definition is accesible through any uri at the server just appending ?wsdl, so /soap?wsdl will return the spec file.
 
-    ffencoderd SOAP functionality is based on SOAP-Lite so please refer to
-    the module documentation for further information on how the SOAP part
-    works.
+    ffencoderd SOAP functionality is based on SOAP-Lite so please refer to the module documentation for further information on how the SOAP part works.
 
-    You may post any request to the SOAP server conforming the SOAP 1.1
-    specification.
+    You may post any request to the SOAP server conforming the SOAP 1.1 specification.
 
-    See the API documentation for more information about accesible methods
-    on the server.
+    See the API documentation for more information about accesible methods on the server.
 
 #####API
     Constants that are returned by the SOAP API
