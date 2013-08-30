@@ -260,86 +260,72 @@ This is the same file that output.file from config, this access is for easiness 
     See the API documentation for more information about accesible methods on the server.
 
 #####API
-    Constants that are returned by the SOAP API
+Constants that are returned by the SOAP API
 
-    FFENCODERD_FAIL
-        Context : ffencoderd service status functions
+- FFENCODERD_FAIL
+  - Context : ffencoderd service status functions
+  - value : 100
 
-        value : 100
+- FFENCODERD_OK
+  - Context : ffencoderd service status functions
+  - value : 101
 
-    FFENCODERD_OK
-        Context : ffencoderd service status functions
+- FFENCODERD_UNKNOWN
+  - Context : ffencoderd encoding processes functions
+  - value : 200
 
-        value : 101
+- FFENCODERD_PROCESSING
+  - Context : ffencoderd encoding processes functions
+  - value : 201
 
-    FFENCODERD_UNKNOWN
-        Context : ffencoderd encoding processes functions
+- FFENCODERD_SUCCESS
+  - Context : ffencoderd encoding processes functions
+  - value : 202
 
-        value : 200
+- FFENCODERD_PROBLEM
+  - Context : ffencoderd encoding processes functions
+  - value : 203
 
-    FFENCODERD_PROCESSING
-        Context : ffencoderd encoding processes functions
+--
 
-        value : 201
+__status__ - The method returns the status of the ffencoderd process. It returns an integer value corresponding to an ffencoderd SOAP API constant.
 
-    FFENCODERD_SUCCESS
-        Context : ffencoderd encoding processes functions
+######Return
+ * integer : Constant with the status of the server FFENCODERD_OK|FFENCODERD_FAIL. If FFENCODERD_FAIL there is some problem with the server
 
-        value : 202
+--
 
-    FFENCODERD_PROBLEM
-        Context : ffencoderd encoding processes functions
+__getProcess__ - The method returns an xml with some metadata about the process which has been codified.
 
-        value : 203
+######Parameters
+ * processId : Identifier for the process, this corresponds to the process identifier returned in getList()
 
-    The method returns the status of the ffencoderd process. It returns an
-    integer value corresponding to an ffencoderd SOAP API constant
+######Return
+ * string : An xml string with some information about the process, mainly its characteristics or FFENCODERD_FAIL if didn't find it
 
-    status
+--
 
-     Return
-       integer : Constant with the status of the server
-       FFENCODERD_OK|FFENCODERD_FAIL. If FFENCODERD_FAIL there is some
-       problem with the server
+__getList__ - Returns an xml formatted response with a list with uid of ended encoding processes.
 
-    The method returns an xml with some metadata about the process which has
-    been codified
+######Return
+ * string : An xml string with a list of processes listed by uid.
 
-    getProcess
+--
 
-     Parameters
-       processId : Identifier for the process, this corresponds to the
-       process identifier returned in getList()
+__addProcess__ - Add a resource to encode.
 
-     Return
-       string : An xml string with some information about the process,
-       mainly its characteristics or FFENCODERD_FAIL if didn't find it
+######Parameters
+ * process : The process definition as a complex SOAP structure.
 
-    Returns an xml formatted response with a list with uid of ended encoding
-    processes
+######Return
+ * string : Returns a string with a constant indicating if the creation of the process was succesful.
 
-    getList
+--
 
-     Return
-       string : An xml string with a list of processes listed by uid
+__version__ - Returns the API version.
 
-    Add a resource to encode
-
-    addProcess
-
-     Parameters
-       process : The process definition as a complex SOAP structure
-
-     Return
-       string : Returns a string with a constant indicating if the creation
-       of the process was succesful
-
-    Returns the API version
-
-    version
-
-     Return
-       string : A string with the API's version
+######Return
+ * string : A string with the API's version
 
 #####Examples
     Next is an example of using SOAP-Lite as client to request version
